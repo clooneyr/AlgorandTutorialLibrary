@@ -28,7 +28,6 @@ algodAddress = "http://localhost:4001";
 algodServer = "http://localhost";
 algodPort = 4001;
 algodToken = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-
 ```
 Declare state storage variables, once deployed these values cannot be changed :
 
@@ -37,7 +36,6 @@ localInts = 1;
 localBytes = 1;
 globalInts = 1;
 globalBytes = 0;
-
 ```
 
 ---
