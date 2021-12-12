@@ -4,12 +4,11 @@ This process can be simplified AlgoBuilder, however this method is recommended i
 
 - [AlgoBuilder](https://github.com/scale-it/algo-builder).
 
-
 ---
 
-### _Prerequisites:_
+### _Environment Setup:_
 
-- Development Environment Setup, you can use following documentation "insert here".
+- Please refer to the [Environment Setup](envSetup.md) documentation for details.
 
 ---
 
@@ -30,6 +29,7 @@ algodPort = 4001;
 algodToken = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
 ```
+
 Declare state storage variables, once deployed these values cannot be changed :
 
 ```
@@ -48,6 +48,7 @@ The following two functions are generic and can be used when deploying any smart
 For best practice save the following functions in separate JS files and important them for use.
 
 Compiler Function:
+
 ```
 async function compileProgram(client, programSource) {
     let encoder = new TextEncoder();
@@ -58,6 +59,7 @@ async function compileProgram(client, programSource) {
 }
 
 ```
+
 Confirmation Function:
 
 ```
@@ -82,6 +84,7 @@ const waitForConfirmation = async function (algodclient, txId) {
 ---
 
 ## Deployment Function.
+
 To get a better grasp of this function I have broken it into 4 stages.
 
 First we are declaring who the sender is, we do this by passing the creatorAccount object and then utilising .addr to obtain the address.
@@ -91,7 +94,7 @@ We are also using [OnApplicationComplete.NoOpOC](https://algorand.github.io/js-a
 ```
 
 async function createApp(client, creatorAccount, approvalProgram, clearProgram, localInts, localBytes, globalInts, globalBytes) {
-    
+
     sender = creatorAccount.addr;
     onComplete = algosdk.OnApplicationComplete.NoOpOC;
 
@@ -119,14 +122,14 @@ Now we are ready to create a transaction, for this transaction we are using [mak
 - For the additional optional parameters refer to SDK documentation
 
 ```
-let txn = algosdk.makeApplicationCreateTxn(sender, params, onComplete, 
-                                            approvalProgram, clearProgram, 
+let txn = algosdk.makeApplicationCreateTxn(sender, params, onComplete,
+                                            approvalProgram, clearProgram,
                                             localInts, localBytes, globalInts, globalBytes,);
     let txId = txn.txID().toString();
 
 ```
 
-For a transaction to be sent, it first must be signed, we do this by using the creator accounts secret key: 
+For a transaction to be sent, it first must be signed, we do this by using the creator accounts secret key:
 
 ```
 let signedTxn = txn.signTxn(creatorAccount.sk);
@@ -153,6 +156,7 @@ return appId;
 ```
 
 ## Opting In Function.
+
 In order to interact with a smart contract (application) we fist must opt into it
 
 First we need to declare the sender of the transaction, and get the necessary paramerters to create a new transaction:
@@ -164,7 +168,7 @@ async function optInApp(client, account, index) {
 
 ```
 
-Now we create the transaction, for this transaction we are using [makeApplicationOptInTxn](https://algorand.github.io/js-algorand-sdk/modules.html#makeapplicationoptintxn) which is specifying that this transaction is opting into the application to use it: 
+Now we create the transaction, for this transaction we are using [makeApplicationOptInTxn](https://algorand.github.io/js-algorand-sdk/modules.html#makeapplicationoptintxn) which is specifying that this transaction is opting into the application to use it:
 
 ```
 let txn = algosdk.makeApplicationOptInTxn(sender, params, index);
@@ -172,7 +176,7 @@ let txId = txn.txID().toString();
 
 ```
 
-In every instance of creating a transaction we have to repeat the same steps of signing it & waiting for confirmation: 
+In every instance of creating a transaction we have to repeat the same steps of signing it & waiting for confirmation:
 
 ```
 let signedTxn = txn.signTxn(account.sk);
@@ -213,7 +217,7 @@ let txId = txn.txID().toString();
 
 ```
 
-Now repeat the same steps of signing it & waitng for confirmation: 
+Now repeat the same steps of signing it & waitng for confirmation:
 
 ```
 let signedTxn = txn.signTxn(account.sk);
@@ -248,7 +252,7 @@ readLocalState
 ```
 async function readLocalState(client, account, index){
     let accountInfoResponse = await client.accountInformation(account.addr).do();
-    for (let i = 0; i < accountInfoResponse['apps-local-state'].length; i++) { 
+    for (let i = 0; i < accountInfoResponse['apps-local-state'].length; i++) {
         if (accountInfoResponse['apps-local-state'][i].id == index) {
             console.log("User's local state:");
             for (let n = 0; n < accountInfoResponse['apps-local-state'][i][`key-value`].length; n++) {
@@ -265,7 +269,7 @@ readGlobalState
 ```
 async function readGlobalState(client, account, index){
     let accountInfoResponse = await client.accountInformation(account.addr).do();
-    for (let i = 0; i < accountInfoResponse['created-apps'].length; i++) { 
+    for (let i = 0; i < accountInfoResponse['created-apps'].length; i++) {
         if (accountInfoResponse['created-apps'][i].id == index) {
             console.log("Application's global state:");
             for (let n = 0; n < accountInfoResponse['created-apps'][i]['params']['global-state'].length; n++) {
@@ -287,6 +291,7 @@ First we configure the algodClient with connection parameters we provided at the
 let algodClient = new algosdk.Algodv2(algodToken, algodServer, algodPort);
 
 ```
+
 Follow this tutorial to learn how to fund accounts (insert here)
 Then we need to important two accounts that have been funded:
 
@@ -298,6 +303,7 @@ let creatorAccount = algosdk.mnemonicToSecretKey(creatorMnemonic);
 let userAccount = algosdk.mnemonicToSecretKey(userMnemonic);
 
 ```
+
 Now we compile our approbal / clear contracts:
 
 ```
@@ -305,6 +311,7 @@ let approvalProgram = await compileProgram(algodClient, approvalProgramSourceRef
 let clearProgram = await compileProgram(algodClient, clearProgramSource);
 
 ```
+
 We are now ready to call the creatApp function to deploy our contracts:
 
 ```
@@ -318,7 +325,9 @@ Next we opt into the application to interact with it:
 await optInApp(algodClient, userAccount, appId);
 
 ```
+
 Now we can call our smart contract:
+
 - if we wanted to pass an argument we would replace undefined with appArgs
 
 ```
@@ -346,5 +355,3 @@ If you are using algobuilders deployment environment use the following:
 yarn run algob deploy scripts/<File name>
 
 ```
-
-
