@@ -45,7 +45,7 @@ globalBytes = 0;
 ## Setting up deployment functions.
 
 The following two functions are generic and can be used when deploying any smart contract.
-For best practice save the following functions in separate JS files and important then for use.
+For best practice save the following functions in separate JS files and important them for use.
 
 Compiler Function:
 ```
