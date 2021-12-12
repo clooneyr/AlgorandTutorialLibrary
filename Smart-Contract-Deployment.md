@@ -21,7 +21,7 @@ import the JS SDK:
 const algosdk = require('algosdk');
 ```
 
-Declare algod connection parameters, these will vary depending on your development environment setup, the following are defaults for a PrivateNode & Sanbox :
+Declare algod connection parameters, these will vary depending on your development environment setup, the following are defaults for a PrivateNode & Sandbox :
 
 ```
 algodAddress = "http://localhost:4001";
