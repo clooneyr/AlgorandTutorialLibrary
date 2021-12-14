@@ -9,7 +9,7 @@ Following functions are for the Javascript SDK:
 
 ## Funding Account Script.
 
-Copy and paste and run with algobuilder:
+Copy and paste into Account.js file, run with algobuilder :
 
 ```
 const {
