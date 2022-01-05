@@ -15,6 +15,15 @@ def approval_program():
     #Declaring scratchspace, with type uint64
     scratchCount = ScratchVar(TealType.uint64)
 
+
+    #Setting Function that allows user to change count value to any number
+    SetNumber = Btoi(Txn.application_args[1])
+    numberSet = Seq([
+        #scratchCount.store(App.globalGet(Bytes("Counter"))), #putting the current value of counter in scratch space
+        App.globalPut(Bytes("Counter"), Int(SetNumber)), #then we are changing the value of counter by adding 1
+        Approve(),
+    ])
+
     #Addition Function which adds 1
     addition = Seq([
         scratchCount.store(App.globalGet(Bytes("Counter"))), #putting the current value of counter in scratch space
@@ -35,6 +44,7 @@ def approval_program():
     on_call = Cond(
         [on_call_method == Bytes("minus"), subtraction],
         [on_call_method == Bytes("add"), addition],
+        [on_call_method == Bytes("set"), numberSet],
         
     )
 
