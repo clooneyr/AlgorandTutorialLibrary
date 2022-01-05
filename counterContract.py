@@ -20,7 +20,7 @@ def approval_program():
     SetNumber = Btoi(Txn.application_args[1])
     numberSet = Seq([
         #scratchCount.store(App.globalGet(Bytes("Counter"))), #putting the current value of counter in scratch space
-        App.globalPut(Bytes("Counter"), Int(SetNumber)), #then we are changing the value of counter by adding 1
+        App.globalPut(Bytes("Counter"), SetNumber), #then we are changing the value of counter by adding 1
         Approve(),
     ])
 
