@@ -1,47 +1,53 @@
-# Setup Development Environment
+https://github.com/algorand/sandbox
 
-There are few ways to setup your development environment:
-
-- Sandbox (Recommended).
-- [Third-party API services](https://developer.algorand.org/docs/get-started/devenv/#2-third-party-api-services).
-- [Run your Algorand node](https://developer.algorand.org/docs/get-started/devenv/#3-run-your-algorand-node) (Good to do).
-
----
+# Algorand Developer Environment Setup
 
 ### _Prerequisites:_
-
+- Python3
+- Pip3
+- Node package manager i.e NPM or Yarn
 - Docker & docker-compose.
-
-  _It is recommended to run sandbox in Linux-based OS:_
-
-* For Windows, you can [download](https://docs.microsoft.com/en-us/windows/wsl/install) & use WSL2 to run a Ubuntu sub system. ([Full instructions](https://github.com/algorand/sandbox#windows)).
-* For MacOS, you can use [Homebrew](https://brew.sh/) to install Docker & docker-compose.
-
 ---
 
-## Spin up a local Algorand network with sandbox.
+## Pyteal Install
 
-Open a terminal and run:
+```
+pip3 install pyteal
+```
+
+### Smartcontract Creation
+1. Filetype = .py
+2. from pyteal import *
+
+### Compile Smartcontract
+```
+python <filename>
+```
+
+## JS Development Environment
+
+1. Install JS SDK
+
+```
+$ npm install algosdk
+```
+
+2. Load Sandbox into repository
 
 ```
 git clone https://github.com/algorand/sandbox.git
 ```
 
-In whatever local directory the sandbox should reside. Then:
+3. Start up Algorand TestNet
 
 ```
 cd sandbox
-./sandbox up
+./sandbox up testnet
 ```
+_To shut down testnet run ./sandbox down_
 
-This will run the sandbox shell script with the default configuration. See the Basic Configuration for other options.
-
-Note for Ubuntu: You may need to alias docker to sudo docker or follow the steps in https://docs.docker.com/install/linux/linux-postinstall so that a non-root user can user the command docker.
-
-Run the test command for examples of how to interact with the environment:
+4. Run JS script
 
 ```
-./sandbox test
+node <filenmame.js>
 ```
-
-For more information about configuring the sandbox, see the [sandbox documentation](https://github.com/algorand/sandbox#basic-configuration).
