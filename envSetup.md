@@ -1,5 +1,3 @@
-https://github.com/algorand/sandbox
-
 # Algorand Developer Environment Setup
 
 ### _Prerequisites:_
