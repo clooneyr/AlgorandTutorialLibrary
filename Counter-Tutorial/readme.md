@@ -18,7 +18,11 @@ Then we want to have our two accounts created in the ./client/App.js file we can
 
 ## Counter Contract 📚
 
-Now we need to create the smart contracts, we can do this by running the following code, also in the ./contacts/counter.py file
+Now we need to create the smart contracts, we can do this by running the following code, also in the ./contacts/counter.py file, make sure you have an enviroment installed and that you have
+
+```
+pip install pyteal
+```
 
 ```
 from pyteal import *
