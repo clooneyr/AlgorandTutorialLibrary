@@ -1,15 +1,6 @@
-# Full code for contract and deployment script 📚
-
-
----
-
-## Counter Contract.
-
-
-```
 from pyteal import *
 
-""" Counter program """
+# Counter Program
 
 def approval_program():
     on_create = Seq([
@@ -18,12 +9,10 @@ def approval_program():
         Approve(),
     ])
 
-
     is_owner = Txn.sender() == App.globalGet(Bytes("owner"))
 
     #Declaring scratchspace, with type uint64
     scratchCount = ScratchVar(TealType.uint64)
-
 
     #Setting Function that allows user to change count value to any number
     SetNumber = Btoi(Txn.application_args[1])
@@ -67,11 +56,9 @@ def approval_program():
     )
 
     return program
-
     
 def clear_state_program():
     return Approve()
-
 
 if __name__ == "__main__":
     with open("approval.teal", "w") as f:
@@ -81,12 +68,3 @@ if __name__ == "__main__":
     with open("clear.teal", "w") as f:
         compiled = compileTeal(clear_state_program(), mode=Mode.Application, version=5)
         f.write(compiled)
-```
-
----
-
-## Deployment Script .
-
-```
-from pyteal import *
-```
